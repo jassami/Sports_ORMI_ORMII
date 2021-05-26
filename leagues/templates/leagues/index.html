@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sports Leagues</title>
+	</head>
+	<body>
+		<h1>Sports ORM I</h1>
+		<h3>Baseball Leagues</h3>
+		<ol>
+			{% for league in all_baseball_leagues %}
+				<li>{{league.name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>womens' leagues</h3>
+		<ol>
+			{% for league in all_women_leagues %}
+				<li>{{league.name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Any type of hockey league</h3>
+		<ol>
+			{% for league in type_of_hockey %}
+				<li>{{league.name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Not football leagues</h3>
+		<ol>
+			{% for league in not_football_leagues %}
+				<li>{{league.name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Leagues that call themselves "conferences"</h3>
+		<ol>
+			{% for league in leagues_called_conferences %}
+				<li>{{league.name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Leagues in the Atlantic region</h3>
+		<ol>
+			{% for league in leagues_Atlantic_region %}
+				<li>{{league.name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Teams based in Dallas</h3>
+		<ol>
+			{% for team in teams_in_dallas %}
+				<li>{{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Teams named the Raptors</h3>
+		<ol>
+			{% for team in teams_named_Raptors %}
+				<li>{{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Teams whose location includes "City"</h3>
+		<ol>
+			{% for team in teams_includes_city %}
+				<li>{{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Teams whose names begin with "T"</h3>
+		<ol>
+			{% for team in teams_with_t %}
+				<li>{{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Teams ordered alphabetically by location</h3>
+		<ol>
+			{% for team in teams_ordered_location %}
+				<li>{{team.location}} {{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Teams ordered by team name in reverse alphabetical order</h3>
+		<ol>
+			{% for team in teams_ordered_name_reverse %}
+				<li>{{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Players with last name "Cooper"</h3>
+		<ol>
+			{% for player in player_last_name_Cooper %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Players with first name "Joshua"</h3>
+		<ol>
+			{% for player in Players_first_name_Joshua %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Players with last name "Cooper" EXCEPT "Joshua" as the first name</h3>
+		<ol>
+			{% for player in last_cooper_first_not_joshue %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>Players with first name "Alexander" OR first name "Wyatt"</h3>
+		<ol>
+			{% for player in first_name_Alexander_or_Wyatt %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+
+
+		<h1>Sports ORM II</h1>
+		<h3>1- Teams in the Atlantic Soccer Conference</h3>
+		<ol>
+			{% for team in teams_Atlantic_Conference %}
+				<li>{{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>2- Current players on the Boston Penguins</h3>
+		<ol>
+			{% for player in players_Boston_Penguins %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>3- Current players in the International Collegiate Baseball Conference</h3>
+		<ol>
+			{% for team in teams_Int_Col_Bball_Conf %}
+				<li>{{team.team_name}} </li>
+				<ol>
+					{% for player in team.curr_players.all %}
+						<li>{{player.first_name}} {{player.last_name}}</li>
+					{% endfor %}
+				</ol>
+			{% endfor %}
+		</ol>
+		<h3>4- Current players in the American Conference of Amateur Football with last name "Lopez"</h3>
+		<ol>
+			{% for team in American_Conf_Amateur_lastname_Lopez %}
+				{% for player in team.curr_players.all %}
+					{% if player.last_name == "Lopez" %}
+						<li>{{player.first_name}} {{player.last_name}}</li>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		</ol>
+		<h3>5- All football players</h3>
+		<ol>
+			{% for player in all_players %}
+				{% if player.curr_team.league.sport == "Football" %}
+						<li>{{player.first_name}} {{player.last_name}}</li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<h3>6- All teams with a (current) player named "Sophia"</h3>
+		<ol>
+			{% for player in player_with_Sophia %}
+				<li>{{player.curr_team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>7- Leagues with a (current) player named "Sophia"</h3>
+		<ol>
+			{% for player in player_with_Sophia %}
+				<li>{{player.curr_team.league.name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>8- Everyone with the last name "Flores" who DOESN'T (currently) play for the Washington Roughriders</h3>
+		<ol>
+			{% for player in players_with_Flores %}
+				{% if player.curr_team.team_name != "Roughriders" and player.curr_team.location != "Washington" %}
+					<li>{{player.first_name}} {{player.last_name}}</li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<h3>8- Everyone with the last name "Flores" who DOESN'T (currently) play for the Washington Roughriders</h3>
+		<ol>
+			{% for player in question_8 %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>9- All teams, past and present, that Samuel Evans has played with</h3>
+		<ol>
+			{% for team in Samuel_Evans.all_teams.all %}
+				<li>{{team.team_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>10- All players, past and present, with the Manitoba Tiger-Cats</h3>
+		<ol>
+			{% for player in players_Manitoba_TigerCats %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>10- All players, past and present, with the Manitoba Tiger-Cats</h3>
+		<ol>
+			{% for player in Manitoba_TigerCats.all_players.all %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>11- All players who were formerly (but aren't currently) with the Wichita Vikings</h3>
+		<ol>
+			{% for player in players_formerly_Wichita_Vikings %}
+				<li>{{player.first_name}} {{player.last_name}}</li>
+			{% endfor %}
+		</ol>
+		<h3>12- Every team that Jacob Gray played for before he joined the Oregon Colts</h3>
+		<ol>
+			{% for team in JacobGray_before_OregonColts %}
+				{% for player in team.all_players.all %}
+					{% if player.first_name == "Jacob" and player.last_name == "Gray" %}
+					<li>{{team.team_name}}, {{team.location}}</li>
+					{% endif %}
+				{% endfor%}
+			{% endfor %}
+		</ol>
+		<h3>13- Everyone named "Joshua" who has ever played in the Atlantic Federation of Amateur Baseball Players</h3>
+		<ol>
+			{% for player in Joshua_AtlantFed_Baseball %}
+				{%  for team in player.all_teams.all %}
+					{% if team.league.name == "Atlantic Federation of Amateur Baseball Players" %}
+						<li>{{player.first_name}} {{player.last_name}}</li>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		</ol>
+		<h3>14- All teams that have had 12 or more players, past and present.</h3>
+		<ol>
+			{% for team in all_teams_12players %}
+				{% if team.player_num > 12 or team.player_num == 12 %}
+					<li>{{team.team_name}}</li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<h3>15- All players and count of teams played for, sorted by the number of teams they've played for</h3>
+		<ol>
+			{% for player in player_team_count %}
+			<li>{{player.first_name}} {{player.last_name}}, {{player.team_num}}</li>
+			{% endfor %}
+
+		</ol>
+	</body> 
+</html>
